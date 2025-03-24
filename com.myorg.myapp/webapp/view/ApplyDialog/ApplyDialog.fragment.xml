@@ -302,6 +302,10 @@
           press="._onSave"
         />
         <Button
+          text="{i18n>setBusy}"
+          press="._onBusy"
+        />
+        <Button
           text="{i18n>applyDialog.btnClose}"
           press="._onClose"
         />

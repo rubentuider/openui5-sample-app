@@ -962,4 +962,8 @@ export default class ApplyDialog extends BaseDialog {
   public _onFileTypeMismatch(): void {
     MessageBox.error(this._getText("applyDialog.upload.error.wrongFileType") as string);
   }
+
+  _onBusy(): void {
+    this._dialog.setBusy(!this._dialog.getBusy());
+  }
 }
