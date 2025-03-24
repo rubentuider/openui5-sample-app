@@ -1,0 +1,312 @@
+<core:FragmentDefinition
+  xmlns:core="sap.ui.core"
+  xmlns="sap.m"
+  xmlns:form="sap.ui.layout.form"
+  xmlns:u="sap.ui.unified"
+  xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  core:require="{
+    formatMessage: 'sap/base/strings/formatMessage'
+  }"
+>
+
+  <Dialog
+    title="{
+      parts: [{
+        path: 'i18n>applyDialog.title'
+      }, {
+        path: 'jobsearch>jobTitle'
+      }],
+      formatter: 'formatMessage'
+    }"
+    contentWidth="600px"
+    validateFieldGroup="._validate"
+  >
+    <content>
+      <core:Fragment
+        fragmentName="com.myorg.myapp.view.ApplyDialog.UploadTable"
+        type="XML"
+      />
+
+      <Panel
+        headerText="{i18n>applyDialog.form.yourData}"
+      >
+        <form:SimpleForm
+          id="applyDialogForm"
+          layout="ResponsiveGridLayout"
+          labelSpanL="12"
+          labelSpanM="12"
+          width="100%"
+          breakpointL="300"
+          editable="true"
+        >
+          <Label
+            text="{i18n>applyDialog.form.salutation}"
+            class="mmmakeUiRocketApplyFormRequired"
+            required="true"
+          />
+          <Select
+            id="salutation"
+            selectedKey="{data>/yourData/salutation}"
+            fieldGroupIds="yourRequiredData"
+            customData:groupName="{i18n>applyDialog.form.yourData}"
+            customData:fieldName="{i18n>applyDialog.form.salutation}"
+            valueState="{
+              parts: [
+                { path: 'i18n>applyDialog.form.salutation' },
+                { path: 'messages>/errors' }
+              ],
+              formatter: '._valueStateFormatter'
+            }"
+            change="._validate"
+            items="{
+              path: 'picklist>/PicklistSet(\'rcm_salutation\')/picklistOptions',
+              sorter: {
+                path: 'label'
+              }
+            }"
+          >
+            <core:Item
+              key="{
+                path: 'picklist>id',
+                targetType: 'int'
+              }"
+              text="{picklist>label}"
+            />
+          </Select>
+
+          <Label
+            text="{i18n>applyDialog.form.firstName}"
+            class="mmmakeUiRocketApplyFormRequired"
+            required="true"
+          />
+          <Input
+            value="{data>/yourData/firstName}"
+            fieldGroupIds="yourRequiredData"
+            customData:groupName="{i18n>applyDialog.form.yourData}"
+            customData:fieldName="{i18n>applyDialog.form.firstName}"
+            valueState="{
+              parts: [
+                { path: 'i18n>applyDialog.form.firstName' },
+                { path: 'messages>/errors' }
+              ],
+              formatter: '._valueStateFormatter'
+            }"
+            change="._validate"
+          />
+
+          <Label
+            text="{i18n>applyDialog.form.lastName}"
+            class="mmmakeUiRocketApplyFormRequired"
+            required="true"
+          />
+          <Input
+            value="{data>/yourData/lastName}"
+            fieldGroupIds="yourRequiredData"
+            customData:groupName="{i18n>applyDialog.form.yourData}"
+            customData:fieldName="{i18n>applyDialog.form.lastName}"
+            valueState="{
+              parts: [
+                { path: 'i18n>applyDialog.form.lastName' },
+                { path: 'messages>/errors' }
+              ],
+              formatter: '._valueStateFormatter'
+            }"
+            change="._validate"
+          />
+
+          <Label
+            text="{i18n>applyDialog.form.email}"
+            class="mmmakeUiRocketApplyFormRequired"
+            required="true"
+          />
+          <Input
+            type="Email"
+            value="{data>/yourData/email}"
+            fieldGroupIds="yourRequiredData"
+            customData:groupName="{i18n>applyDialog.form.yourData}"
+            customData:fieldName="{i18n>applyDialog.form.email}"
+            valueState="{
+              parts: [
+                { path: 'i18n>applyDialog.form.email' },
+                { path: 'messages>/errors' }
+              ],
+              formatter: '._valueStateFormatter'
+            }"
+            change="._validate"
+          />
+
+          <Label
+            text="{i18n>applyDialog.form.mobile}"
+            class="mmmakeUiRocketApplyFormRequired"
+            required="true"
+          />
+          <Input
+            type="Tel"
+            value="{data>/yourData/mobile}"
+            fieldGroupIds="yourRequiredData"
+            customData:groupName="{i18n>applyDialog.form.yourData}"
+            customData:fieldName="{i18n>applyDialog.form.mobile}"
+            valueState="{
+              parts: [
+                { path: 'i18n>applyDialog.form.mobile' },
+                { path: 'messages>/errors' }
+              ],
+              formatter: '._valueStateFormatter'
+            }"
+            change="._validate"
+          />
+
+          <HBox
+            fitContainer="true"
+            alignContent="Center"
+          >
+            <Text
+              text="{i18n>applyDialog.form.agreement}"
+            />
+            <Switch
+              state="{
+                path: 'data>/yourData/custPoolApproval',
+                targetType: 'int'
+              }"
+              type="AcceptReject"
+            />
+          </HBox>
+
+          <Label
+            text="{i18n>applyDialog.form.country}"
+            class="mmmakeUiRocketApplyFormRequired"
+            required="true"
+          />
+          <Select
+            id="country"
+            selectedKey="{data>/yourData/rcm_country}"
+            fieldGroupIds="yourRequiredData"
+            customData:groupName="{i18n>applyDialog.form.yourData}"
+            customData:fieldName="{i18n>applyDialog.form.country}"
+            valueState="{
+              parts: [
+                { path: 'i18n>applyDialog.form.country' },
+                { path: 'messages>/errors' }
+              ],
+              formatter: '._valueStateFormatter'
+            }"
+            change="._validate"
+            items="{
+              path: 'picklist>/PicklistSet(\'rcm_country\')/picklistOptions',
+              sorter: {
+                path: 'label'
+              }
+            }"
+          >
+            <core:Item
+              key="{
+                path: 'picklist>id',
+                targetType: 'int'
+              }"
+              text="{picklist>label}"
+            />
+          </Select>
+
+          <Label
+            text="{i18n>applyDialog.form.profileVisibility}"
+          />
+          <Select
+            selectedKey="{data>/yourData/rcm_privacysettings}"
+            customData:groupName="{i18n>applyDialog.form.yourData}"
+            customData:fieldName="{i18n>applyDialog.form.profileVisibility}"
+            valueState="{
+              parts: [
+                { path: 'i18n>applyDialog.form.profileVisibility' },
+                { path: 'messages>/errors' }
+              ],
+              formatter: '._valueStateFormatter'
+            }"
+            items="{
+              path: 'picklist>/PicklistSet(\'rcm_privacysettings\')/picklistOptions',
+              sorter: {
+                path: 'label'
+              }
+            }"
+            change="._validate"
+          >
+            <core:Item
+              key="{
+                path: 'picklist>id',
+                targetType: 'int'
+              }"
+              text="{picklist>label}"
+            />
+          </Select>
+
+          <HBox
+            fitContainer="true"
+            alignContent="Center"
+          >
+            <VBox>
+              <Label
+                text="{i18n>applyDialog.form.privacyPolicy}"
+                class="sapUiTinyMarginTop mmmakeUiRocketApplyFormRequired"
+                required="true"
+              />
+              <Link
+                text="{i18n>applyDialog.form.privacyPolicyUrlText}"
+                href="{i18n>applyDialog.form.privacyPolicyUrlHref}"
+                target="_blank"
+              />
+            </VBox>
+            <Switch
+              state="{data>/yourData/agreeToPrivacyStatement}"
+              class="sapUiTinyMarginTop"
+              type="AcceptReject"
+              fieldGroupIds="yourRequiredData"
+              customData:groupName="{i18n>applyDialog.form.yourData}"
+              customData:fieldName="{i18n>applyDialog.form.privacyPolicy}"
+              change="._validate"
+            />
+          </HBox>
+        </form:SimpleForm>
+
+        <!-- <VBox
+          id="applyDialogAdditionalQuestions"
+          items="{
+            path: 'jobsearch>questions',
+            factory: '._controlFactory'
+          }"
+        /> -->
+      </Panel>
+
+    </content>
+
+    <footer>
+      <Toolbar>
+        <Button
+          id="applyDialogMsgPopover"
+          visible="{
+            path: 'messages>/errors',
+            formatter: '._formHasErrors'
+          }"
+          icon="sap-icon://error"
+          type="Negative"
+          text="{
+            path: 'messages>/errors',
+            formatter: '._errorsCountFormatter'
+          }"
+          press="._onOpenMessagePopup"
+          ariaHasPopup="Dialog"
+        />
+        <ToolbarSpacer />
+
+        <Button
+          type="Emphasized"
+          text="{i18n>applyDialog.btnSave}"
+          press="._onSave"
+        />
+        <Button
+          text="{i18n>applyDialog.btnClose}"
+          press="._onClose"
+        />
+      </Toolbar>
+    </footer>
+  </Dialog>
+
+</core:FragmentDefinition>

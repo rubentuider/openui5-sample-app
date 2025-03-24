@@ -1,0 +1,143 @@
+<core:FragmentDefinition
+  xmlns:core="sap.ui.core"
+  xmlns="sap.m"
+  xmlns:fb="sap.ui.comp.filterbar"
+  xmlns:upload="sap.m.upload"
+  xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  core:require="{
+    formatter: 'com/myorg/myapp/model/formatter'
+  }"
+>
+
+  <Panel
+    headerText="{i18n>applyDialog.upload.title}"
+  >
+    <MessageStrip
+      showIcon="true"
+      text="{i18n>applyDialog.upload.error.wrongFileType}"
+    />
+    <MessageStrip
+      showIcon="true"
+      text="{i18n>applyDialog.upload.error.tooBig}"
+    />
+
+    <Table
+      id="applyDialogUploadTable"
+      fieldGroupIds="attachments"
+      customData:groupName="{i18n>applyDialog.upload.title}"
+      customData:fieldName="{i18n>applyDialog.upload.title}"
+      sticky="ColumnHeaders,HeaderToolbar"
+      width="auto"
+      fixedLayout="false"
+      inset="true"
+      autoPopinMode="true"
+      hiddenInPopin="None"
+      items="{
+        path: 'documents>/items',
+        templateShareable: false
+      }"
+    >
+
+      <headerToolbar>
+        <OverflowToolbar>
+          <ToolbarSpacer />
+
+          <!-- Use the UploadButtonPlaceholder to add the UploadButton to the toolbar -->
+          <upload:ActionsPlaceholder
+            id="uploadButton"
+            text="{i18n>applyDialog.upload.uploadButton}"
+            placeholderFor="UploadButtonPlaceholder"
+          />
+
+        </OverflowToolbar>
+      </headerToolbar>
+
+      <dependents>
+        <plugins.UploadSetwithTable
+          multiple="true"
+          onActivated="._onPluginActivated"
+          uploadCompleted="._onUploadCompleted"
+          fileTypeMismatch="._onFileTypeMismatch"
+          itemRenamed="._onDocumentRenamedSuccess"
+          fileTypes="pdf,docx,jpg,jpeg,png,txt"
+          maxFileSize="5"
+          fileSizeExceeded="._onFileSizeExceeded"
+          cloudFilePickerEnabled="true"
+          actions="uploadButton"
+          previewDialog="FilePreviewDialog"
+        >
+          <rowConfiguration>
+            <upload.UploadItemConfiguration
+              fileNamePath="fileName"
+              mediaTypePath="mediaType"
+              urlPath="url"
+              fileSizePath="fileSize"
+              isTrustedSourcePath="trustedSource"
+            />
+          </rowConfiguration>
+        </plugins.UploadSetwithTable>
+      </dependents>
+
+      <columns>
+        <Column importance="High">
+          <header>
+            <Label text="{i18n>applyDialog.upload.fileName}" />
+          </header>
+        </Column>
+        <Column>
+          <header>
+            <Label text="{i18n>applyDialog.upload.fileSize}" />
+          </header>
+        </Column>
+        <Column>
+          <header>
+            <Label text="{i18n>applyDialog.upload.fileCategory}" />
+          </header>
+        </Column>
+        <Column importance="High" />
+      </columns>
+
+
+      <items>
+        <ColumnListItem>
+
+          <cells>
+            <Text text="{
+              path: 'documents>name',
+              targetType: 'any'
+            }" />
+            <Text
+              text="{
+                parts: [
+                  'documents>fileSize'
+                ],
+                targetType: 'any',
+                formatter: '._getFileSizeWithUnits'
+              }"
+            />
+            <Select
+              selectedKey="{documents>category}"
+              customData:groupName="{i18n>applyDialog.upload.title}"
+              customData:fieldName="{i18n>applyDialog.upload.fileCategory}"
+            >
+              <items>
+                <core:Item key="" text="{i18n>applyDialog.upload.fileCategory.default}" />
+                <core:Item key="attachment1" text="{i18n>applyDialog.upload.fileCategory.attachment1}" />
+                <core:Item key="resume" text="{i18n>applyDialog.upload.fileCategory.resume}" />
+                <core:Item key="coverLetter" text="{i18n>applyDialog.upload.fileCategory.coverLetter}" />
+              </items>
+            </Select>
+            <Button
+              class="sapUiTinyMarginBegin"
+              type="Transparent"
+              icon="sap-icon://decline"
+              press="._onRemoveHandler"
+            />
+          </cells>
+        </ColumnListItem>
+      </items>
+    </Table>
+
+  </Panel>
+
+</core:FragmentDefinition>

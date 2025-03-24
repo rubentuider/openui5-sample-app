@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+  xmlns:core="sap.ui.core"
+  xmlns="sap.m"
+  xmlns:form="sap.ui.layout.form"
+  xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+
+  <MessagePopover
+    items="{
+      path: 'messages>/errors'
+    }"
+    groupItems="true"
+    activeTitlePress="._onTitlePress"
+  >
+    <MessageItem
+      title="{messages>message}"
+      subtitle="{messages>additionalText}"
+      type="{messages>type}"
+      groupName="{
+        path: 'messages>',
+        formatter: '._getMessageItemGroupName'
+      }"
+      activeTitle="true"
+      customData:message="{messages>}"
+    />
+  </MessagePopover>
+
+</core:FragmentDefinition>
